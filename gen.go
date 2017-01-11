@@ -69,6 +69,7 @@ func (g Gen) Uint64(i int64) uint64 {
 }
 
 // hash hashes the octets of v into s using the FNV-1a hash algorithm
+// TODO: investigate http://xoroshiro.di.unimi.it/
 func hash(s uint64, v uint64) uint64 {
 	s ^= uint64(v & 0xff)
 	s *= prime64
