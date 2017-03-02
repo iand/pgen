@@ -33,7 +33,7 @@ func (g Gen) Int32(i int64) int32 {
 	return int32((v >> 31) ^ (v & ((1 << 31) - 1)))
 }
 
-// Int64 generates the random number for index i and converts it to a float64 in the range [0,1).
+// Float64 generates the random number for index i and converts it to a float64 in the range [0,1).
 func (g Gen) Float64(i int64) float64 {
 	if i < 0 {
 		panic("invalid argument to Float64")
@@ -43,6 +43,14 @@ func (g Gen) Float64(i int64) float64 {
 	// See http://lemire.me/blog/2017/02/28/how-many-floating-point-numbers-are-in-the-interval-01/
 	// for interesting discussion of this phenomena.
 	return float64(g.Intn(i, 1<<53)) / (1 << 53)
+}
+
+// Float32 generates the random number for index i and converts it to a float32 in the range [0,1).
+func (g Gen) Float32(i int64) float32 {
+	if i < 0 {
+		panic("invalid argument to Float32")
+	}
+	return float32(g.Intn(i, 1<<24)) / (1 << 24)
 }
 
 // Intn generates the random number for index i. It returns integers in the range [0,n).
