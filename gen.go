@@ -1,7 +1,6 @@
 package pgen
 
 import (
-	"math"
 	"math/rand"
 )
 
@@ -34,12 +33,16 @@ func (g Gen) Int32(i int64) int32 {
 	return int32((v >> 31) ^ (v & ((1 << 31) - 1)))
 }
 
-// Int64 generates the random number for index i and converts it to a float64 in the range [0,1].
+// Int64 generates the random number for index i and converts it to a float64 in the range [0,1).
 func (g Gen) Float64(i int64) float64 {
 	if i < 0 {
 		panic("invalid argument to Float64")
 	}
-	return float64(g.Int64(i)) / math.MaxInt64
+	// There are only 2^53 representable floating point numbers in [0,1] so to get an unbiased
+	// distribution we need to pick one number from 2^53 and scale it to the range 0,1.
+	// See http://lemire.me/blog/2017/02/28/how-many-floating-point-numbers-are-in-the-interval-01/
+	// for interesting discussion of this phenomena.
+	return float64(g.Intn(i, 1<<53)) / (1 << 53)
 }
 
 // Intn generates the random number for index i. It returns integers in the range [0,n).
