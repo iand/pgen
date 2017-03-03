@@ -1,4 +1,4 @@
-# microdata
+# pgen
 A Go package for deterministic generation of random-like numbers.
 
 This package is designed for simulations and procedural generation where you need to generate random-like features from a known seed. 
@@ -29,7 +29,7 @@ Example of a procedural level generator:
     )
 
     func generateLevel(level int64) {
-        // These constants control the random
+        // These constants control which random number is returned by the generator
         const (
             numberOfPits = iota
             numberOfEnemies
@@ -53,7 +53,7 @@ Example of a procedural level generator:
         // Starting location on the 64x64 grid
         x, y := gen.Intn(spawnPointX,64), gen.Intn(spawnPointY,64)
         placePlayer(x, y)
-        
+
         // Is there a legendary item?
         if rand.Float64() <= gen.Intn(legendaryLootChance).Float64() {
             placeLoot()
