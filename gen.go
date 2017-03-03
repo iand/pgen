@@ -69,11 +69,13 @@ func (g Gen) Intn(i int64, n int) int {
 	return int(v & mask)
 }
 
+// Rand returns a random number generator for index i.
 func (g Gen) Rand(i int64) *rand.Rand {
 	seed := g.Int64(i)
 	return rand.New(rand.NewSource(seed))
 }
 
+// Uint64 generates the random number for index i. It returns integers in the range [0,2^64-1].
 func (g Gen) Uint64(i int64) uint64 {
 	s := hash(offset64, uint64(g))
 	return hash(s, uint64(i))
