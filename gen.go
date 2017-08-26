@@ -3,7 +3,7 @@
   information, see <http://unlicense.org/> or the accompanying UNLICENSE file.
 */
 
-// A package for deterministic generation of random-like numbers.
+// Package pgen is a package for deterministic generation of random-like numbers.
 package pgen
 
 import (

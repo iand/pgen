@@ -8,6 +8,8 @@ order in which you call the rng you'll get a different result. pgen allows you t
 number in the random sequence is to be used for a specific procedurally generated feature. This
 preserves behaviour even if code refactoring changes the order in which the simulation is generated.
 
+[![Build Status](https://travis-ci.org/iand/pgen.svg?branch=master)](https://travis-ci.org/iand/pgen)
+
 ## Installation
 
 Simply run
