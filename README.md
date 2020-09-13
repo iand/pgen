@@ -62,6 +62,10 @@ Example of a procedural level generator:
         }
     }       
 
+The key advantage of a procedural generator over an ordinary random number generator is that the order of calls doesn't matter
+and adding extra calls in between others will not affect the random numbers. This makes it robust against ongoing changes in the
+program. In the example above, adding new type of enemy later on won't break any existing levels that have been generated.
+
 
 ## License
 
