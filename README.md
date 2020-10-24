@@ -1,4 +1,11 @@
 # pgen
+
+[![Build Status](https://travis-ci.org/iand/pgen.svg?branch=master)](https://travis-ci.org/iand/pgen)
+[![Go Report Card](https://goreportcard.com/badge/github.com/iand/pgen)](https://goreportcard.com/report/github.com/iand/pgen)
+[![go.dev reference](https://img.shields.io/badge/go.dev-reference-007d9c?logo=go&logoColor=white)](https://pkg.go.dev/github.com/iand/pgen)
+
+## Overview
+
 A Go package for deterministic generation of random-like numbers.
 
 This package is designed for simulations and procedural generation where you need to generate random-like features from a known seed. 
@@ -8,11 +15,9 @@ order in which you call the rng you'll get a different result. pgen allows you t
 number in the random sequence is to be used for a specific procedurally generated feature. This
 preserves behaviour even if code refactoring changes the order in which the simulation is generated.
 
-[![Build Status](https://travis-ci.org/iand/pgen.svg?branch=master)](https://travis-ci.org/iand/pgen)
-
 ## Installation
 
-Simply run
+Simply run the following in your module:
 
     go get github.com/iand/pgen
 
@@ -30,7 +35,10 @@ Example of a procedural level generator:
         "math/rand"
     )
 
-    func generateLevel(level int64) {
+    // generateLevel generates a new game level based on the level seed. It will always
+    // generate the same level no matter how many other levels were generated before
+    // or if the order of generation is changed.
+    func generateLevel(levelSeed int64) {
         // These constants control which random number is returned by the generator
         const (
             numberOfPits = iota
@@ -40,7 +48,7 @@ Example of a procedural level generator:
             legendaryLootChance
         )
         
-        gen := pgen.New(level)
+        gen := pgen.New(levelSeed)
 
         // Generate up to 8 pits
         for i := 0; i < gen.Intn(numberOfPits, 8) {
