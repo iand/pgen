@@ -48,7 +48,7 @@ func (g Gen) Float64(i int64) float64 {
 	// distribution we need to pick one number from 2^53 and scale it to the range 0,1.
 	// See http://lemire.me/blog/2017/02/28/how-many-floating-point-numbers-are-in-the-interval-01/
 	// for interesting discussion of this phenomena.
-	return float64(g.Intn(i, 1<<53)) / (1 << 53)
+	return float64(g.Int64n(i, 1<<53)) / (1 << 53)
 }
 
 // Float32 generates the random number for index i and converts it to a float32 in the range [0,1).
@@ -62,7 +62,7 @@ func (g Gen) Float32(i int64) float32 {
 // Intn generates the random number for index i. It returns integers in the range [0,n).
 func (g Gen) Intn(i int64, n int) int {
 	if i <= 0 {
-		panic("invalid argument to Int64")
+		panic("invalid argument to Intn")
 	}
 
 	un := uint64(n)
@@ -73,6 +73,22 @@ func (g Gen) Intn(i int64, n int) int {
 		v = hash(v, un)
 	}
 	return int(v & mask)
+}
+
+// Int64n generates the random number for index i using 64 bits. It returns integers in the range [0,n).
+func (g Gen) Int64n(i int64, n int64) int64 {
+	if i <= 0 {
+		panic("invalid argument to Int64n")
+	}
+
+	un := uint64(n)
+	mask := umask(un)
+	v := g.Uint64(i)
+
+	for v&mask >= un {
+		v = hash(v, un)
+	}
+	return int64(v & mask)
 }
 
 // Rand returns a random number generator for index i.
