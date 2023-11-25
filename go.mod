@@ -1,3 +1,3 @@
 module github.com/iand/pgen
 
-go 1.16
+go 1.21.4
