@@ -142,7 +142,7 @@ const (
 func umask(n uint64) uint64 {
 	mask := uint64((1 << 64) - 1)
 	t := uint64(1 << 63)
-	for j := 0; j < 64; j++ {
+	for range 64 {
 		if n&t == t {
 			break
 		}
