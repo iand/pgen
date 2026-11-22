@@ -30,8 +30,8 @@ jobs:
         run: |
           set -o pipefail
           go install golang.org/x/exp/cmd/gorelease@v0.0.0-20261121134650-e1094eeca1b5
-          gorelease | tee gorelease.txt
-          echo "version=$(sed -n 's/^Suggested version: v\([^ ]*\).*/\1/p' gorelease.txt)" >> "$GITHUB_OUTPUT"
+          gorelease | tee "$RUNNER_TEMP/gorelease.txt"
+          echo "version=$(sed -n 's/^Suggested version: v\([^ ]*\).*/\1/p' "$RUNNER_TEMP/gorelease.txt")" >> "$GITHUB_OUTPUT"
 
       - name: Tag release
         if: ${{ steps.release.outputs.version != '' }}
